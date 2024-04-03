@@ -29,8 +29,11 @@ repls.toggleterm = function(start_line, end_line, repl_args, cell_marker)
 
   for _, line in ipairs(lines) do
     local l = trim_spaces and line:gsub("^%s+", ""):gsub("%s+$", "") or line
-    require("toggleterm").exec(l, id)
+    if l ~= "" then
+      require("toggleterm").exec(l, id)
+    end
   end
+  require("toggleterm").exec("", id) -- at the end run everything
 
   -- Jump back with the cursor where we were at the beginning of the selection
   local cursor_line, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
